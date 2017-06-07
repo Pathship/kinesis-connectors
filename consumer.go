@@ -59,13 +59,8 @@ func (c *Consumer) handlerLoop(shardID string, handler Handler) {
 		ShardId:    aws.String(shardID),
 		StreamName: aws.String(c.StreamName),
 	}
-
-	if c.Checkpoint.CheckpointExists(shardID) {
-		params.ShardIteratorType = aws.String("AFTER_SEQUENCE_NUMBER")
-		params.StartingSequenceNumber = aws.String(c.Checkpoint.SequenceNumber())
-	} else {
-		params.ShardIteratorType = aws.String("TRIM_HORIZON")
-	}
+	
+	params.ShardIteratorType = aws.String("LATEST")
 
 	resp, err := c.svc.GetShardIterator(params)
 	if err != nil {
