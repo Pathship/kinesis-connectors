@@ -67,32 +67,4 @@ func (c *Config) setDefaults() {
 	if c.FlushInterval == 0 {
 		c.FlushInterval = time.Second
 	}
-
-	if c.Checkpoint == nil {
-		client, err := redisClient()
-		if err != nil {
-			c.Logger.WithError(err).Error("Redis connection failed")
-			os.Exit(1)
-		}
-		c.Checkpoint = &RedisCheckpoint{
-			AppName:    c.AppName,
-			StreamName: c.StreamName,
-			client:     client,
-		}
-	}
-}
-
-func redisClient() (*redis.Client, error) {
-	redisURL := os.Getenv("REDIS_URL")
-	if redisURL == "" {
-		redisURL = defaultRedisAddr
-	}
-	client := redis.NewClient(&redis.Options{
-		Addr: redisURL,
-	})
-	_, err := client.Ping().Result()
-	if err != nil {
-		return nil, err
-	}
-	return client, nil
 }
