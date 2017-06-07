@@ -7,6 +7,10 @@ import (
 	"github.com/apex/log"
 )
 
+const (
+	defaultBufferSize = 500	
+)
+
 // Config vars for the application
 type Config struct {
 	// AppName is the application name and checkpoint namespace.
