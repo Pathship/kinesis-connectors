@@ -7,11 +7,6 @@ import (
 	"github.com/apex/log"
 )
 
-const (
-	defaultBufferSize = 500
-	defaultRedisAddr  = "127.0.0.1:6379"
-)
-
 // Config vars for the application
 type Config struct {
 	// AppName is the application name and checkpoint namespace.
